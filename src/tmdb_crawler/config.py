@@ -1,0 +1,4 @@
+API_KEY = "YOUR_TMDB_API_KEY"
+CONCURRENT_REQUESTS = 10
+DATA_DIR = "data"
+MOVIE_IDS_FILE = "movie_ids.txt"
