@@ -4,6 +4,12 @@ This project provides a flexible pipeline to **fetch movie and credit data from 
 
 It exists because TMDb offers a rich, structured dataset that is ideal for building graph representations of actors, movies, and relationships. The crawler makes it easy to collect, store, and transform this data reproducibly.
 
+Here we:
+* Download the latest TMDB movie id data dump
+* Filter out all adult films and minor productions
+* Work out which films need to be fetched against what we currently have downloaded
+* Download the missing films and cast
+
 ## Installation
 
 Create a virtual environment and install dependencies:
