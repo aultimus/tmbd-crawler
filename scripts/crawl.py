@@ -16,6 +16,9 @@ async def worker(movie_id, session, semaphore, output_dir, incremental):
         movie_data, credits_data = await fetch_movie_and_credits(
             session, API_KEY, movie_id
         )
+        if movie_data is None or credits_data is None:
+            print(f"Skipping {movie_id} due to missing data (possibly 404)")
+            return
         save_data(movie_id, movie_data, credits_data, output_dir=output_dir)
 
 

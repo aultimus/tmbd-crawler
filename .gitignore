@@ -195,3 +195,7 @@ cython_debug/
 
 movie_ids.txt
 new_movie_ids.txt
+data/
+acted_in.csv
+movies.csv
+people.csv
