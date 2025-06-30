@@ -56,7 +56,7 @@ def fetch_ids_for_range(start_date, end_date):
         if page >= data.get("total_pages", 1):
             break
 
-        time.sleep(0.25)  # Be polite
+        time.sleep(0.15)  # Be polite
 
     print(f"Fetched {len(ids)} IDs for {start_date} to {end_date}")
     return ids
