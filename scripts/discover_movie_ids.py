@@ -16,22 +16,23 @@ MAX_PAGES = 500
 OUTPUT_FILE = "movie_ids.txt"
 NEW_IDS_FILE = "new_movie_ids.txt"
 
-# Adjust date slices here
-DATE_RANGES = [
-    ("1900-01-01", "1909-12-31"),
-    ("1910-01-01", "1919-12-31"),
-    ("1920-01-01", "1929-12-31"),
-    ("1930-01-01", "1939-12-31"),
-    ("1940-01-01", "1949-12-31"),
-    ("1950-01-01", "1959-12-31"),
-    ("1960-01-01", "1969-12-31"),
-    ("1970-01-01", "1979-12-31"),
-    ("1980-01-01", "1989-12-31"),
-    ("1990-01-01", "1999-12-31"),
-    ("2000-01-01", "2009-12-31"),
-    ("2010-01-01", "2019-12-31"),
-    ("2020-01-01", datetime.utcnow().strftime("%Y-%m-%d")),
-]
+
+def generate_yearly_date_ranges(start_year=1900):
+    today = datetime.utcnow().date()
+    current_year = today.year
+    ranges = []
+    for year in range(start_year, current_year):
+        start = datetime(year, 1, 1).date()
+        end = datetime(year, 12, 31).date()
+        ranges.append((str(start), str(end)))
+    # Add current year up to today
+    start = datetime(current_year, 1, 1).date()
+    end = today
+    ranges.append((str(start), str(end)))
+    return ranges
+
+
+DATE_RANGES = generate_yearly_date_ranges()
 
 
 def fetch_ids_for_range(start_date, end_date):

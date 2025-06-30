@@ -1,10 +1,9 @@
 import json
 import os
-from .config import DATA_DIR
 
 
-def ensure_data_dir():
-    os.makedirs(DATA_DIR, exist_ok=True)
+def ensure_data_dir(output_dir):
+    os.makedirs(output_dir, exist_ok=True)
 
 
 def load_movie_ids(filename):
@@ -12,8 +11,8 @@ def load_movie_ids(filename):
         return [line.strip() for line in f if line.strip()]
 
 
-def save_data(movie_id, movie_data, credits_data):
-    ensure_data_dir()
-    path = os.path.join(DATA_DIR, f"{movie_id}.json")
+def save_data(movie_id, movie_data, credits_data, output_dir):
+    ensure_data_dir(output_dir)
+    path = os.path.join(output_dir, f"{movie_id}.json")
     with open(path, "w", encoding="utf-8") as f:
         json.dump({"movie": movie_data, "credits": credits_data}, f, indent=2)

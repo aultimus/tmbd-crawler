@@ -1,18 +1,17 @@
 import os
 import json
 import csv
-from .config import DATA_DIR
 
 
-def transform_to_csv():
+def transform_to_csv(data_dir):
     movie_rows = []
     person_rows = {}
     acted_in_rows = []
 
-    for fname in os.listdir(DATA_DIR):
+    for fname in os.listdir(data_dir):
         if not fname.endswith(".json"):
             continue
-        path = os.path.join(DATA_DIR, fname)
+        path = os.path.join(data_dir, fname)
         with open(path, encoding="utf-8") as f:
             data = json.load(f)
 

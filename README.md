@@ -30,8 +30,6 @@ Create a .env file in the project root:
 ```
 TMDB_API_KEY=your_tmdb_api_key_here
 CONCURRENT_REQUESTS=10
-DATA_DIR=data
-MOVIE_IDS_FILE=movie_ids.txt
 ```
 
 ## Running
