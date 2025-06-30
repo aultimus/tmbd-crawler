@@ -34,13 +34,17 @@ CONCURRENT_REQUESTS=10
 
 ## Running
 
-The main workflow is managed via the Makefile. Common targets:
+The main workflow is managed via the Makefile. The output of each preceding step feeds into the following step:
 
 - `make discover-movie-ids`
+  Input: N/A
+  Output: `movie_ids.txt, new_movie_ids.txt`
   Download all TMDb movie IDs to `movie_ids.txt` and new IDs since last run to `new_movie_ids.txt`. The new IDs file can be used for incremental fetches in the next crawl step.
 
 - `make crawl`
-  Run the crawler to download movie and credit JSON files. You can pass arguments to control concurrency and the input file:
+  Input: `movie_ids.txt`
+  Output: `data/*.json`
+  Run the crawler to download movie and credit JSON files for the given IDs. You can pass arguments to control concurrency and the input file:
 
   ```sh
   make crawl ARGS="--concurrent-requests 20 --movie-ids-file custom_ids.txt"
@@ -49,6 +53,8 @@ The main workflow is managed via the Makefile. Common targets:
   - `--movie-ids-file` sets the path to the movie IDs file (default: movie_ids.txt)
 
 - `make transform`
+  Input: `data/*.json`
+  Output: `acted_in.csv, movies.csv, people.csv`
   Transform JSON data into CSV files ready for Neo4j import.
 
 - `make clean`
