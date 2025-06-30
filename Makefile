@@ -16,7 +16,7 @@ discover-movie-ids:
 
 # Run crawler
 crawl:
-	python scripts/crawl.py
+	python scripts/crawl.py $(ARGS)
 
 # Transform data to CSVs
 transform:
