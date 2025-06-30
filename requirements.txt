@@ -14,12 +14,18 @@ async-timeout==5.0.1
     # via aiohttp
 attrs==25.3.0
     # via aiohttp
+certifi==2025.6.15
+    # via requests
+charset-normalizer==3.4.2
+    # via requests
 frozenlist==1.7.0
     # via
     #   aiohttp
     #   aiosignal
 idna==3.10
-    # via yarl
+    # via
+    #   requests
+    #   yarl
 multidict==6.6.2
     # via
     #   aiohttp
@@ -28,9 +34,13 @@ propcache==0.3.2
     # via
     #   aiohttp
     #   yarl
+requests==2.32.4
+    # via tmdb-crawler (pyproject.toml)
 tqdm==4.67.1
     # via tmdb-crawler (pyproject.toml)
 typing-extensions==4.14.0
     # via multidict
+urllib3==2.5.0
+    # via requests
 yarl==1.20.1
     # via aiohttp

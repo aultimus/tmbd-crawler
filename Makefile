@@ -1,4 +1,4 @@
-.PHONY: install develop crawl transform clean
+.PHONY: install develop crawl transform clean discover-movie-ids
 
 
 pin-dependencies:
@@ -9,6 +9,10 @@ pin-dependencies:
 install-dependencies:
 	pip install -r dev-requirements.txt
 	pip install -e .
+
+# Discover new movie IDs and update movie_ids.txt and new_movie_ids.txt
+discover-movie-ids:
+	python scripts/discover_movie_ids.py
 
 # Run crawler
 crawl:

@@ -36,9 +36,10 @@ MOVIE_IDS_FILE=movie_ids.txt
 
 ## Running
 
+`make discover-movie-ids` - Download all TMDb movie IDs to `movie_ids.txt` and new IDs since last run to `new_movie_ids.txt`
 `make crawl` - Run the crawler to download movie and credit JSON files
 `make transform` - Transform JSON data into CSV files ready for Neo4j import
-`make clean` - Remove all downloaded JSON and generated CSVs
+`make clean` - Remove all downloaded JSON and generated CSVs 
 
 
 ## Features
@@ -46,3 +47,6 @@ MOVIE_IDS_FILE=movie_ids.txt
 - Async crawler with configurable concurrency
 - Incremental data collection
 - Clean CSV export for bulk Neo4j import
+
+## TODO
+- Convert some env vars into command line flags. Just keep api key as env var

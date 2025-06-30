@@ -16,6 +16,7 @@ requires-python = ">=3.8"
 dependencies = [
     "aiohttp",
     "tqdm",
+    "requests",
 ]
 
 [project.urls]
