@@ -23,6 +23,9 @@ def is_valid_movie(movie):
             datetime.strptime(date_str, "%Y-%m-%d")
         except ValueError:
             return False, f"Invalid release_date: {date_str}"
+    # Filter out adult movies
+    if movie.get("adult"):
+        return False, "Adult movie filtered"
     return True, None
 
 

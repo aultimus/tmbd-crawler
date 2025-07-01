@@ -68,3 +68,4 @@ The main workflow is managed via the Makefile. The output of each preceding step
 
 ## TODO
 - Do a more comprehensive ID fetch that is not limited to 10k per decade
+- Make filters configurable for library use

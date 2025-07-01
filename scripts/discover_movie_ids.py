@@ -44,6 +44,8 @@ def fetch_ids_for_range(start_date, end_date):
             "primary_release_date.gte": start_date,
             "primary_release_date.lte": end_date,
             "page": page,
+            "vote_count.gte": 5,  # Only movies with at least 5 votes
+            "include_adult": "false",  # Skip adult movies
         }
         response = requests.get(BASE_URL, params=params)
         if response.status_code != 200:
