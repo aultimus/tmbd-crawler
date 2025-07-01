@@ -199,4 +199,4 @@ data/
 acted_in.csv
 movies.csv
 people.csv
-movies.db
+tmdb.db

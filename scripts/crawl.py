@@ -82,8 +82,8 @@ def parse_args():
     )
     parser.add_argument(
         "--db-path",
-        default="movies.db",
-        help="Path to SQLite database (default: movies.db)",
+        default="tmdb.db",
+        help="Path to SQLite database (default: tmdb.db)",
     )
     parser.add_argument(
         "--incremental",

@@ -43,7 +43,7 @@ The main workflow is managed via the Makefile. The output of each preceding step
 
 - `make crawl`
   Input: `movie_ids.txt`
-  Output: `sqlite.db`
+  Output: `tmdb.db`
   Run the crawler to download movie and credit JSON files for the given IDs. You can pass arguments to control concurrency and the input file:
 
   ```sh
@@ -53,7 +53,7 @@ The main workflow is managed via the Makefile. The output of each preceding step
   - `--movie-ids-file` sets the path to the movie IDs file (default: movie_ids.txt)
 
 - `make transform`
-  Input: `sqlite.db`
+  Input: `tmdb.db`
   Output: `acted_in.csv, movies.csv, people.csv`
   Transform JSON data into CSV files ready for Neo4j import.
 
