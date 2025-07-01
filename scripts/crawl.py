@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 from tqdm import tqdm
 from tmdb_crawler.fetcher import fetch_movie_and_credits
-from tmdb_crawler.storage import load_movie_ids, save_data
+from tmdb_crawler.storage import load_movie_ids, save_data_sqlite
 from tmdb_crawler.config import API_KEY
 
 
@@ -29,10 +29,17 @@ def is_valid_movie(movie):
     return True, None
 
 
-async def worker(movie_id, session, semaphore, output_dir, incremental):
-    path = os.path.join(output_dir, f"{movie_id}.json")
-    if incremental and os.path.exists(path):
-        return  # Skip if file exists
+async def worker(movie_id, session, semaphore, db_path, incremental):
+    # For incremental, check if movie already in DB
+    import sqlite3
+
+    if incremental and os.path.exists(db_path):
+        conn = sqlite3.connect(db_path)
+        cur = conn.execute("SELECT 1 FROM movies WHERE id=?", (movie_id,))
+        if cur.fetchone():
+            conn.close()
+            return
+        conn.close()
     async with semaphore:
         movie_data, credits_data = await fetch_movie_and_credits(
             session, API_KEY, movie_id
@@ -44,17 +51,16 @@ async def worker(movie_id, session, semaphore, output_dir, incremental):
         if not valid:
             print(f"Skipping {movie_id}: {reason}")
             return
-        save_data(movie_id, movie_data, credits_data, output_dir=output_dir)
+        save_data_sqlite(movie_id, movie_data, credits_data, db_path)
 
 
-async def main(movie_ids_file, concurrent_requests, output_dir, incremental):
+async def main(movie_ids_file, concurrent_requests, db_path, incremental):
     movie_ids = load_movie_ids(movie_ids_file)
     semaphore = asyncio.Semaphore(concurrent_requests)
 
     async with aiohttp.ClientSession() as session:
         tasks = [
-            worker(mid, session, semaphore, output_dir, incremental)
-            for mid in movie_ids
+            worker(mid, session, semaphore, db_path, incremental) for mid in movie_ids
         ]
 
         for f in tqdm(asyncio.as_completed(tasks), total=len(tasks)):
@@ -75,14 +81,14 @@ def parse_args():
         help="Number of concurrent requests (default: 10)",
     )
     parser.add_argument(
-        "--output-dir",
-        default="data",
-        help="Directory to store output JSON files (default: data)",
+        "--db-path",
+        default="movies.db",
+        help="Path to SQLite database (default: movies.db)",
     )
     parser.add_argument(
         "--incremental",
         action="store_true",
-        help="Skip downloading if JSON file already exists (default: False)",
+        help="Skip downloading if movie already exists in DB (default: False)",
     )
     return parser.parse_args()
 
@@ -93,7 +99,7 @@ if __name__ == "__main__":
         main(
             args.movie_ids_file,
             args.concurrent_requests,
-            args.output_dir,
+            args.db_path,
             args.incremental,
         )
     )

@@ -24,5 +24,4 @@ transform:
 
 # Clean generated data and CSVs
 clean:
-	rm -rf data/*.json
 	rm -f movies.csv people.csv acted_in.csv

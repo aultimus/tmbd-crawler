@@ -1,14 +1,15 @@
 # tmbd-crawler
 
-This project provides a flexible pipeline to **fetch movie and credit data from TMDb** (The Movie Database) and **transform it into Neo4j-compatible CSVs**.
+This project provides a way to bootstrap a TMDB dataset. It provides a flexible pipeline to **fetch movie and credit data from TMDb** (The Movie Database) and **transform it into Neo4j-compatible CSVs**.
 
 It exists because TMDb offers a rich, structured dataset that is ideal for building graph representations of actors, movies, and relationships. The crawler makes it easy to collect, store, and transform this data reproducibly.
 
 Here we:
-* Download the latest TMDB movie id data dump
-* Filter out all adult films and minor productions
-* Work out which films need to be fetched against what we currently have downloaded
-* Download the missing films and cast
+* Discover available movie ids and filter out all adult films and minor productions `make discover-movies`
+* Download metadata for the given IDs `make crawl`
+* Transform the data into a neo4j importable form `make transform`
+
+The final transform step converts the data into a form importable into a neo4j database optimised for the six degrees of separation problem.
 
 ## Installation
 
@@ -42,7 +43,7 @@ The main workflow is managed via the Makefile. The output of each preceding step
 
 - `make crawl`
   Input: `movie_ids.txt`
-  Output: `data/*.json`
+  Output: `sqlite.db`
   Run the crawler to download movie and credit JSON files for the given IDs. You can pass arguments to control concurrency and the input file:
 
   ```sh
@@ -52,7 +53,7 @@ The main workflow is managed via the Makefile. The output of each preceding step
   - `--movie-ids-file` sets the path to the movie IDs file (default: movie_ids.txt)
 
 - `make transform`
-  Input: `data/*.json`
+  Input: `sqlite.db`
   Output: `acted_in.csv, movies.csv, people.csv`
   Transform JSON data into CSV files ready for Neo4j import.
 
