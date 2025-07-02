@@ -20,14 +20,14 @@ def transform_to_csv(db_path):
         person_rows[person_id] = person_name
         acted_in_rows.append([person_id, movie_id, character])
 
-    # Write movies.csv
-    with open("movies.csv", "w", newline="", encoding="utf-8") as f:
+    # Write films.csv
+    with open("films.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["movie_id:ID", "title", "year"])
         writer.writerows(movie_rows)
 
-    # Write people.csv
-    with open("people.csv", "w", newline="", encoding="utf-8") as f:
+    # Write actors.csv
+    with open("actors.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["person_id:ID", "name"])
         for pid, name in person_rows.items():

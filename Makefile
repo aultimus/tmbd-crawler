@@ -24,4 +24,4 @@ transform:
 
 # Clean generated data and CSVs
 clean:
-	rm -f movies.csv people.csv acted_in.csv
+	rm -f films.csv actors.csv acted_in.csv

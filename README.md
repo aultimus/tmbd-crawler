@@ -54,7 +54,7 @@ The main workflow is managed via the Makefile. The output of each preceding step
 
 - `make transform`
   Input: `tmdb.db`
-  Output: `acted_in.csv, movies.csv, people.csv`
+  Output: `acted_in.csv, films.csv, actors.csv`
   Transform JSON data into CSV files ready for Neo4j import.
 
 - `make clean`
