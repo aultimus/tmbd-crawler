@@ -9,8 +9,9 @@ def transform_to_csv(db_path):
     acted_in_rows = []
 
     for row in conn.execute("SELECT id, title, release_date FROM movies"):
-        movie_id, movie_title, _ = row[0], row[1], row[2]
-        movie_rows.append([movie_id, movie_title])
+        movie_id, movie_title, movie_year = row[0], row[1], row[2]
+        year = movie_year.split("-")[0] if movie_year else ""
+        movie_rows.append([movie_id, movie_title, year])
 
     for row in conn.execute(
         "SELECT movie_id, person_id, person_name, character FROM cast"
@@ -19,10 +20,10 @@ def transform_to_csv(db_path):
         person_rows[person_id] = person_name
         acted_in_rows.append([person_id, movie_id, character])
 
-    # Write films.csv without year
+    # Write films.csv with year
     with open("films.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["tconst:ID(Film)", "title"])
+        writer.writerow(["tconst:ID(Film)", "title", "year"])
         writer.writerows(movie_rows)
 
     # Write actors.csv with lowercase_name
