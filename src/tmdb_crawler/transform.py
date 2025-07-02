@@ -26,12 +26,12 @@ def transform_to_csv(db_path):
         writer.writerow(["movie_id:ID", "title", "year"])
         writer.writerows(movie_rows)
 
-    # Write actors.csv
+    # Write actors.csv with lowercase_name
     with open("actors.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["person_id:ID", "name"])
+        writer.writerow(["nconst:ID(Actor)", "name", "lowercase_name"])
         for pid, name in person_rows.items():
-            writer.writerow([pid, name])
+            writer.writerow([pid, name, name.lower()])
 
     # Write acted_in.csv
     with open("acted_in.csv", "w", newline="", encoding="utf-8") as f:
