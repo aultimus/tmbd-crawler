@@ -20,23 +20,23 @@ def transform_to_csv(db_path):
         person_rows[person_id] = person_name
         acted_in_rows.append([person_id, movie_id, character])
 
-    # Write films.csv with year
+    # Write films.csv with requested header
     with open("films.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["tconst:ID(Film)", "title", "year"])
         writer.writerows(movie_rows)
 
-    # Write actors.csv with lowercase_name
+    # Write actors.csv with requested header
     with open("actors.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["nconst:ID(Actor)", "name", "lowercase_name"])
         for pid, name in person_rows.items():
             writer.writerow([pid, name, name.lower()])
 
-    # Write acted_in.csv
+    # Write acted_in.csv with requested header
     with open("acted_in.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow([":START_ID", ":END_ID", "character"])
+        writer.writerow([":START_ID(Actor)", ":END_ID(Film)", "character"])
         writer.writerows(acted_in_rows)
 
     print("CSV files created successfully.")
