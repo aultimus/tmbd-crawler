@@ -1,4 +1,4 @@
-# tmbd-crawler
+# tmdb-crawler
 
 This project provides a way to bootstrap a TMDB dataset. It provides a flexible pipeline to **fetch movie and credit data from TMDb** (The Movie Database) and **transform it into Neo4j-compatible CSVs**.
 
